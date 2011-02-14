@@ -1,177 +1,27 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
-                    "http://www.w3.org/TR/html4/loose.dtd">
+"http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<head>
-  <script src="http://code.jquery.com/jquery-latest.js"></script>
-  <link rel="stylesheet" href="http://code.jquery.com/qunit/git/qunit.css" type="text/css" media="screen" />
-<script type="text/javascript" src="http://code.jquery.com/qunit/git/qunit.js"></script>
-<script type="text/javascript" src="raphael.js"></script>
-<script type="text/javascript" >
-   function Monde(div_id, width, height) {
-        var paper = Raphael(div_id, width, height);
-        paper.rect(0, 0, 100, 100)
-        var cells = [];
+    <head>
+        <meta charset="utf-8"/>
+        <script src="http://code.jquery.com/jquery-latest.js"></script>
+        <link rel="stylesheet" href="http://code.jquery.com/qunit/git/qunit.css" type="text/css" media="screen" />
+        <script type="text/javascript" src="http://code.jquery.com/qunit/git/qunit.js"></script>
+        <script type="text/javascript" src="raphael.js"></script>
+        <script type="text/javascript" src="libtentacle.js"></script>
+	<script type="text/javascript" src="test.js"></script>
 
-        return {
-            add: function(cell) {
-                     cell.paper = paper
-                     paper.circle(cell.x, cell.y, 5)
-                    cell.text = paper.text (cell.x, cell.y, cell.power)
-                    cells.push(cell);
-                 },
-nextFrame: function() {
-                   for (var i = 0; i < cells.length; i++) {
-                       var cell = cells[i]
-                   cell.power++;
-                  $(cell.text.node).text(cell.power)
-               }
-
-           }
-
-        }
-    };
-    function Cellule(x, y) {
-        return {x: x, y: y,
-            attaque: function(target){
-                if (this.power > 100) {
-                    this.paper.path(['M', x, y, 'L', target.x, target.y])
-                }
-            }
-        }
-    };
-</script>
-
-  <script>
-  $(document).ready(function(){
-      var m2 = Monde("run", 100,100); 
-      var c55 = Cellule(50,50); 
-      c55.power = 1;
-      m2.add(c55); 
-
-function run(){
-    m2.nextFrame();
-
-
-setTimeout(run, 1);
-}
-run()
- 
-        module("module2", {
-            setup: function() {
-                $("#canvas svg").remove()
-            },
-            teardown: function() {}
-          });
-
-
-      test("Le monde s'affiche", function() {
-          var m = Monde("canvas", 100, 100);
-
-          equals($("#canvas").find("svg").size(), 1)
-      });
-
-      test("On affiche une cellule", function() {
-          var m = Monde("canvas", 100, 100);
-          var c = Cellule(50, 50)
-
-          m.add(c);
-         
-          ok($("#canvas svg circle").size());
-       });
-
-      test("Une cellule en attaque un autre", function() {
-          var m = Monde("canvas", 100, 100);
-          var c = Cellule(50, 50);
-          c.power = 1000
-          var c2 = Cellule(75, 75);
-
-
-          m.add(c);
-          m.add(c2);
-
-          c.attaque(c2)
-
-          equals($("#canvas svg path").size(), 1);
-       });
-      
-       test("La puissance est affichée", function() {
-          var m = Monde("canvas", 100, 100);
-          var c = Cellule(50, 50);
-          c.power = 1000
-
-          m.add(c);
-
-          equals($("#canvas svg text").text(), "1000");
-       });
-
-       test("Une cellule pas assez puissante pour attaquer", function() {
-          var m = Monde("canvas", 100, 100);
-          var c = Cellule(50, 50);
-          c.power = 1
-          var c2 = Cellule(75, 75);
-
-
-          m.add(c);
-          m.add(c2);
-
-          c.attaque(c2)
-
-          equals($("#canvas svg path").size(), 0);
-
-       })
-
-       test("Les cellules gagnent en puissance avec le temps", function() {
-          var m = Monde("canvas", 100, 100);
-          var c = Cellule(50, 50);
-          c.power = 1
-
-          m.add(c);
-          m.nextFrame();
-
-          equals(c.power, 2);
-
-       })
-
-       test("l'affichage de la puissance de la cellule est mise à jour avec le temps", function() {
-          var m = Monde("canvas", 100, 100);
-          var c = Cellule(50, 50);
-          c.power = 2
-          m.add(c)
-          m.nextFrame()
-          equals($("#canvas svg text").text(), "3");
-          equals($("#canvas svg text").size(), 1);
-       })
-
-       test("l'affichage de la puissance de 2 cellule est mise à jour avec le temps", function() {
-          var m = Monde("canvas", 100, 100);
-          var c = Cellule(50, 50);
-          var c2 = Cellule(80,80);
-          c.power = 2
-          c2.power = 500
-          m.add(c)
-          m.add(c2)
-          m.nextFrame()
-          equals($("#canvas svg text").first().text(), "3");
-          equals($("#canvas svg text").last().text(), "501");
-          equals($("#canvas svg text").size(), 2);
-       })
-
-
-  });
-  </script>
-  
 </head>
 <body>
-  <h1 id="qunit-header">QUnit example</h1>
- <h2 id="qunit-banner"></h2>
- <div id="qunit-testrunner-toolbar"></div>
- <h2 id="qunit-userAgent"></h2>
- <ol id="qunit-tests"></ol>
- <div id="qunit-fixture">test markup, will be hidden</div>
- <div id="canvas"></div>
- 
- <div id="run"></div>
- 
+    <h1 id="qunit-header">QUnit example</h1>
+    <h2 id="qunit-banner"></h2>
+    <div id="qunit-testrunner-toolbar"></div>
+    <h2 id="qunit-userAgent"></h2>
+    <ol id="qunit-tests"></ol>
+    <div id="qunit-fixture">test markup, will be hidden</div>
+    <div id="canvas"></div>
+
+    <div id="run"></div>
+
 </body>
 </html>
 
