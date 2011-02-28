@@ -1,4 +1,16 @@
 On a envie de :
-- de decroitre la puissance lorsqu'elle est attaquée
-- quand la puissance arrive a zero on capture
+
+"From scratch or not ?"
+
+>>   mettre en place un système de camp
+	 quand la puissance arrive a zero on capture
+	 de faire changer le camp d'une cellule (cellule bleue devient rouge)
+
 - Quand on capture on reinitialise a 0
+
+>> Introduire la notion de distance dans le jeu
+- modifier la capacité d'attaque en fonction de la distance
+
+- une attaque affaiblie la cellule attaquante
+- une attaque qui entraine la mort de la celulle attaquante, revient à l'état initial 
+

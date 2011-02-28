@@ -132,13 +132,34 @@ $(document).ready(function(){
 
         })
 
-        test("Lorsque le temps avance, le monde evolue", function() {
+		test("Le monde se nettoie tout seul", function(){
             var m = Monde("canvas", 100, 100);
+            var c = Cellule(50, 50);
+			m.add(c);
+            m.nextFrame()
 
             m.nextFrame()
 
-            ok(false);
+			equals($("#canvas svg circle").size(), 1);
+		})
 
-        })
+		test("Quand la cellule attaquée atteint un score de 0, l'attaque s'arrête", function(){
+            var m = Monde("canvas", 100, 100);
+            var c = Cellule(50, 50);
+			var c2 = Cellule(60,60);			
+			m.add(c);
+			m.add(c2);
+			c.power = 101
+			c2.power = 1
+			c.attaque(c2)		          
+			m.nextFrame()
 
+			m.nextFrame()
+
+			ok(c2.power >= 0);
+		})
+
+		test("Quand la cellule arrive a zero, lattaque s'arrete", function(){
+			
+		})
     });
